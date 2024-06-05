@@ -1,0 +1,19 @@
+<svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <clipPath id="b">
+            <path fill="currentColor"
+                d="M849.5 691.5Q721 883 519 850T198.5 658.5Q80 500 187 322t320.5-191.5q213.5-13.5 342 178t0 383Z" />
+        </clipPath>
+        <pattern id="a" patternUnits="userSpaceOnUse" width="25" height="25" viewBox="0 0 100 100"
+            fill="#3b82f6" patternTransform="rotate(45 0 0)">
+            <path d="M0 0v100" stroke="#3b82f6" stroke-width="20" />
+        </pattern>
+    </defs>
+    <path fill="url(#a)"
+        d="M849.5 691.5Q721 883 519 850T198.5 658.5Q80 500 187 322t320.5-191.5q213.5-13.5 342 178t0 383Z"
+        transform="translate(-60 -60)" />
+    <g clip-path="url(#b)">
+        <path fill="#3b82f6"
+            d="M849.5 691.5Q721 883 519 850T198.5 658.5Q80 500 187 322t320.5-191.5q213.5-13.5 342 178t0 383Z" />
+    </g>
+</svg>
