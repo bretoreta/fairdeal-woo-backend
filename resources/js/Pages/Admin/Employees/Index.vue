@@ -89,7 +89,7 @@ const submit = () => {
 
 </script>
 <template>
-    <AdminLayout title="Employees" page-header="Employees" page-sub-header="Manage employees from here.">
+    <AdminLayout title="Employees">
         <div class="grid grid-cols-12 gap-6 mt-5">
             <div class="flex flex-wrap items-center col-span-12 mt-2 sm:flex-nowrap" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">
                 <Link :href="route('admin.employees.create')" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 rounded-md px-4">
@@ -113,7 +113,7 @@ const submit = () => {
             <div class="col-span-12 overflow-x-auto">
                 <table class="w-full border-spacing-y-[10px] border-separate" v-if="employees.data.length">
                     <thead>
-                        <tr class="font-semibold text-sm">
+                        <tr class="font-semibold text-sm bg-white dark:bg-muted/50">
                             <td class="p-4">Employee</td>
                             <td class="p-4">Phone</td>
                             <td class="p-4">Showroom</td>

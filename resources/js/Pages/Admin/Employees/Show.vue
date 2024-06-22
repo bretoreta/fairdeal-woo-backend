@@ -1,12 +1,10 @@
 <script setup>
 import { ref } from 'vue';
-import { Head, router } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/customParseFormat';
 
 import AdminLayout from '@/Layouts/AdminLayout.vue';
-import EmptyState from '@/Components/EmptyState.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import NavbarLink from '../Components/NavbarLink.vue';
@@ -45,9 +43,7 @@ defineProps({
 </script>
 
 <template>
-    
-    <AdminLayout>
-        <Head title="Show Employee" />
+    <AdminLayout title="Show Employee">
         <div class="px-4 md:px-[22px] max-w-full md:max-w-auto flex-1 min-w-0 min-h-screen pb-10 bg-gray-100">
             <div class="flex items-baseline justify-between pb-4">
                 <h2 class="mt-10 text-2xl text-gray-800 font-semibold" data-aos="fade-up">Vewing Employee | {{ employee.name }}</h2>

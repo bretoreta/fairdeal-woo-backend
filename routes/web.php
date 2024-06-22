@@ -4,8 +4,12 @@ use App\Http\Controllers\Common\BugsreportController;
 use App\Http\Controllers\Common\ImagesController;
 use App\Http\Controllers\Common\SupportController;
 use App\Http\Controllers\Common\RedirectsController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
-
+use Codexshaper\WooCommerce\Facades\Product as WooCommerceProduct;
+use App\Models\Product;
+use App\Models\SyncTransaction;
+use Illuminate\Support\Collection;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +27,14 @@ Route::get('/redirects', [RedirectsController::class, 'index'])->name('redirects
 Route::get('/', function () {
     return redirect('login');
 })->name('index');
+
+Route::get('/test', function() {
+    $products = WooCommerceProduct::all([
+        'fields' => 'id,name,slug,featured,description,short_description,sku,regular_price,sale_price,manage_stock,stock_quantity,stock_status,attributes,categories'
+    ]);
+
+    dd($products);
+});
 
 Route::prefix('support')->group(function() {
     Route::get('/',[SupportController::class,'index'])->name('support.index');

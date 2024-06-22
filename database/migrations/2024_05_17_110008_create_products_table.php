@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('woocommerce_id');
             $table->string('name');
             $table->string('type')->default('simple');
             $table->string('slug');
-            $table->string('status');
             $table->boolean('featured')->default(false);
             $table->longText('description')->nullable();
             $table->text('short_description')->nullable();
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('stock_quantity')->nullable();
             $table->string('stock_status');
             $table->jsonb('attributes');
+            $table->enum('sync_status', ['synced', 'notsynced']);
             $table->timestamps();
         });
     }

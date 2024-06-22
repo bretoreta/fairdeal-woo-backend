@@ -71,7 +71,7 @@ const submit = () => {
                     Continue
                 </Button>
 
-                <Button type="button" variant="outline" class="w-full">
+                <Button type="button" variant="outline" class="w-full" disabled>
                     Continue with Google
                 </Button>
             </div>

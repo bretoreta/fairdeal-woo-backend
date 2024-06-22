@@ -8,25 +8,18 @@ use Spatie\Permission\Models\Role;
 
 class RolesSeeder extends Seeder
 {
+    use WithoutModelEvents;
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
         Role::create([
-            'name' => 'super-admin'
-        ]);
-
-        Role::create([
             'name' => 'admin'
         ]);
 
         Role::create([
             'name' => 'employee'
-        ]);
-
-        Role::create([
-            'name' => 'salesperson'
         ]);
 
         Role::create([

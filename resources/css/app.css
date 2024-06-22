@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -69,6 +68,7 @@
 }
 
 
+
 @layer base {
   * {
     @apply border-border;
@@ -79,17 +79,19 @@
   }
 }
 
-::-webkit-scrollbar {
-  width: 5px;
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out
-}
-
-::-webkit-scrollbar-track {
-  background: 0 0
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 5px
+@media only screen and (min-width: 960px) {
+  ::-webkit-scrollbar {
+    width: 5px;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: 0 0
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px
+  }
 }

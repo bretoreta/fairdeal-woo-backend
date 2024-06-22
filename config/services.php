@@ -32,7 +32,8 @@ return [
     ],
 
     'woocommerce' => [
+        'url' => env('WOOCOMMERCE_STORE_URL'),
         'key' => env('WOOCOMMERCE_CONSUMER_KEY'),
-        'secret' => env('cs_7d3ecede64827ef27a88d52fa09aa28b75913e62'),
+        'secret' => env('WOOCOMMERCE_CONSUMER_SECRET'),
     ],
 ];

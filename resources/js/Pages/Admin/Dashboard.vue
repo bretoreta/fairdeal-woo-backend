@@ -1,16 +1,21 @@
 <script setup>
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import QuickStats from '@/Pages/Admin/Components/QuickStats.vue';
+import SyncManager from '@/Pages/Admin/Components/SyncManager.vue';
+import NotificationsManager from '@/Pages/Admin/Components/NotificationsManager.vue';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/Components/ui/tabs';
 
 defineProps({
-    dashboardData: Object,
-    latestData: Object,
+    activeSync: Boolean,
+    syncable: Boolean,
+    notifications: Array,
+    syncTransactions: Array,
+    statsData: Array,
 });
 
 </script>
 <template>
-    <AdminLayout title="Admin Dashboard" :page-header="'Welcome ' + $page.props.auth.user.name + '✨'" page-sub-header="Here's what's going on today.">
+    <AdminLayout title="Admin Dashboard">
         <Tabs default-value="overview" class="space-y-4">
             <TabsList>
                 <TabsTrigger value="overview">
@@ -24,10 +29,13 @@ defineProps({
                 </TabsTrigger>
             </TabsList>
             <TabsContent value="overview" class="space-y-4">
-                <QuickStats />
+                <QuickStats :syncTransactions="syncTransactions" :statsData="statsData" />
             </TabsContent>
             <TabsContent value="sync" class="space-y-4">
-                <QuickStats />
+                <SyncManager :activeSync="activeSync" :syncable="syncable" />
+            </TabsContent>
+            <TabsContent value="notifications" class="space-y-4">
+                <NotificationsManager :notifications="notifications" />
             </TabsContent>
         </Tabs>
     </AdminLayout>

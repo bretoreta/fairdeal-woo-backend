@@ -22,8 +22,8 @@ const props = defineProps({
 dayjs.extend(relativeTime);
 
 const showSlideOver = ref(false);
-const isDeletingCode = ref(false);
-const deletingCodeId = ref(null);
+const isDeletingShowroom = ref(false);
+const deletingShowroomId = ref(null);
 const showDeleteModal = ref(false);
 
 const form = useForm({
@@ -45,7 +45,7 @@ const editShowroom = (showroom) => {
 }
 
 const confirmDeleteShowroom = (id) => {
-    deletingCodeId.value = id;
+    deletingShowroomId.value = id;
     showDeleteModal.value = true;
 }
 
@@ -62,13 +62,13 @@ const deactivateShowroom = (id) => {
 }
 
 const deleteShowroom = () => {
-    router.delete(route('admin.showrooms.delete', deletingCodeId.value), {
+    router.delete(route('admin.showrooms.delete', deletingShowroomId.value), {
         preserveScroll: true,
         onStart: visit => {
-            isDeletingCode.value = true;
+            isDeletingShowroom.value = true;
         },
         onFinish: visit => {
-            isDeletingCode.value = false;
+            isDeletingShowroom.value = false;
         },
         onSuccess: () => {
             showDeleteModal.value = false
@@ -86,12 +86,12 @@ const submit = () => {
 
 </script>
 <template>
-    <AdminLayout title="Showrooms" page-header="Showrooms" page-sub-header="Manage showrooms from here.">
+    <AdminLayout title="Showrooms">
         <div class="grid grid-cols-12 gap-6 mt-5">
-            <div class="flex flex-wrap items-center col-span-12 mt-2 sm:flex-nowrap" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">
-                <Link :href="route('admin.showrooms.create')" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 rounded-md px-4">
-                    Add New Showroom 
-                </Link>
+            <div class="flex flex-wrap items-center col-span-12 mt-2 sm:flex-nowrap">
+                <Button @click="router.visit(route('admin.showrooms.create'))">
+                    Create Showroom 
+                </Button>
                 <div class="hidden mx-auto md:block text-gray-500"> Showing {{ showrooms.from ?? 0 }} to {{ showrooms.to ?? 0 }} of {{ showrooms.total ?? 0 }} showrooms</div>
                 <div class="w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
                     <div class="relative w-72 text-gray-500">
@@ -107,10 +107,10 @@ const submit = () => {
                     </div>
                 </div>
             </div>
-            <div class="col-span-12 overflow-x-auto" data-aos="fade-up" data-aos-delay="200" data-aos-once="true">
+            <div class="col-span-12 overflow-x-auto">
                 <table class="w-full border-spacing-y-[10px] border-separate" v-if="showrooms.data.length">
                     <thead>
-                        <tr class="font-semibold text-sm">
+                        <tr class="font-semibold text-sm bg-white dark:bg-muted/50">
                             <td class="p-4">Name</td>
                             <td class="p-4">Location</td>
                             <td class="p-4">WhatsApp No.</td>
@@ -122,7 +122,7 @@ const submit = () => {
                     </thead>
                     <tbody>
                         <template v-for="showroom in showrooms.data" :key="showroom.id">
-                            <tr class="bg-white dark:bg-muted/40 dark:text-gray-300">
+                            <tr class="bg-white dark:bg-black dark:text-gray-300">
                                 <td class="p-4 first:rounded-l-md last:rounded-r-md border-b-0">
                                     <p>{{ showroom.name }}</p>
                                 </td>
@@ -282,7 +282,7 @@ const submit = () => {
             </template>
             <template #footer>
                 <div class="flex items-center gap-3">
-                    <Button variant="destructive" @click="deleteShowroom" :class="{ 'opacity-75': isDeletingCode }" :disabled="isDeletingCode" :loading="isDeletingCode">
+                    <Button variant="destructive" @click="deleteShowroom" :class="{ 'opacity-75': isDeletingShowroom }" :disabled="isDeletingShowroom" :loading="isDeletingShowroom">
                         Delete Showroom
                     </Button>
                     <Button variant="outline" @click="showDeleteModal = false">Cancel</Button>

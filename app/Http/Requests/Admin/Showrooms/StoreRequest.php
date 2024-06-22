@@ -24,7 +24,6 @@ class StoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
-            'google_review_link' => ['required', 'string', 'url'],
             'phone' => ['required', 'string', 'starts_with:254', 'max:12', 'unique:showrooms'],
         ];
     }

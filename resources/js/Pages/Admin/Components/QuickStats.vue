@@ -1,5 +1,12 @@
 <script setup>
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card';
+import RecentSyncTransactions from './RecentSyncTransactions.vue';
+import EmptyState from '@/Components/EmptyState.vue';
+
+defineProps({
+    syncTransactions: Array,
+    statsData: Array,
+});
 </script>
 <template>
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -14,11 +21,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Com
             </CardHeader>
             <CardContent>
                 <div class="text-2xl font-bold">
-                    5,231
+                    {{ statsData.totalProducts }}
                 </div>
-                <p class="text-xs text-muted-foreground">
+                <!-- <p class="text-xs text-muted-foreground">
                     +20.1% from last month
-                </p>
+                </p> -->
             </CardContent>
         </Card>
         <Card>
@@ -32,11 +39,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Com
             </CardHeader>
             <CardContent>
                 <div class="text-2xl font-bold">
-                    350
+                    {{ statsData.waitingSyncProducts }}
                 </div>
-                <p class="text-xs text-muted-foreground">
+                <!-- <p class="text-xs text-muted-foreground">
                     +180.1% from last month
-                </p>
+                </p> -->
             </CardContent>
         </Card>
         <Card>
@@ -50,17 +57,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Com
             </CardHeader>
             <CardContent>
                 <div class="text-2xl font-bold">
-                    +12,234
+                    {{ statsData.syncedProducts }}
                 </div>
-                <p class="text-xs text-muted-foreground">
+                <!-- <p class="text-xs text-muted-foreground">
                     +19% from last month
-                </p>
+                </p> -->
             </CardContent>
         </Card>
         <Card>
             <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle class="text-sm font-medium">
-                    Promotions
+                    Synced Products
                 </CardTitle>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                     <path fill-rule="evenodd" d="M1.5 7.125c0-1.036.84-1.875 1.875-1.875h6c1.036 0 1.875.84 1.875 1.875v3.75c0 1.036-.84 1.875-1.875 1.875h-6A1.875 1.875 0 0 1 1.5 10.875v-3.75Zm12 1.5c0-1.036.84-1.875 1.875-1.875h5.25c1.035 0 1.875.84 1.875 1.875v8.25c0 1.035-.84 1.875-1.875 1.875h-5.25a1.875 1.875 0 0 1-1.875-1.875v-8.25ZM3 16.125c0-1.036.84-1.875 1.875-1.875h5.25c1.036 0 1.875.84 1.875 1.875v2.25c0 1.035-.84 1.875-1.875 1.875h-5.25A1.875 1.875 0 0 1 3 18.375v-2.25Z" clip-rule="evenodd" />
@@ -68,11 +75,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Com
             </CardHeader>
             <CardContent>
                 <div class="text-2xl font-bold">
-                    +573
+                    {{ statsData.syncedProducts }}
                 </div>
-                <p class="text-xs text-muted-foreground">
+                <!-- <p class="text-xs text-muted-foreground">
                     +201 since last hour
-                </p>
+                </p> -->
             </CardContent>
         </Card>
     </div>
@@ -80,20 +87,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Com
         <Card class="col-span-4">
             <CardHeader>
                 <CardTitle>Overview</CardTitle>
+                <CardDescription>
+                    An overview of a total of <b>{{ syncTransactions.length }}</b> syncs made this week.
+                </CardDescription>
             </CardHeader>
-            <CardContent class="pl-2">
-                <Overview />
+            <CardContent>
+                <EmptyState title="Charts Coming Soon" subtitle="We will show charts here. This feature is still in development." />
             </CardContent>
         </Card>
         <Card class="col-span-4 md:col-span-3">
             <CardHeader>
-                <CardTitle>Recent Sales</CardTitle>
+                <CardTitle>Recent Sync Transactions</CardTitle>
                 <CardDescription>
-                    You made 265 sales this month.
+                    Showing a total of <b>{{ syncTransactions.length }}</b> syncs made this week.
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <RecentSales />
+                <RecentSyncTransactions :syncTransactions="syncTransactions" />
             </CardContent>
         </Card>
     </div>

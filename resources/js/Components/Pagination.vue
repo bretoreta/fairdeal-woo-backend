@@ -7,20 +7,20 @@
 </script>
 
 <template>
-    <div class="flex items-center justify-between border rounded-b-md bg-white dark:bg-muted/40 px-4 py-3 sm:px-6">
+    <div class="flex items-center justify-between border rounded-b-md bg-white dark:bg-black px-4 py-3 sm:px-6">
         <div class="flex flex-1 justify-between sm:hidden">
             <Link 
                 :href="data.prev_page_url"
                 :preserve-scroll="true"
                 :disabled="!prev_page_url"
-                class="relative inline-flex items-center rounded-md border border-gray-300 bg-white dark:bg-muted/40 px-4 py-2 text-sm 3xl:text-xl font-medium">
+                class="relative inline-flex items-center rounded-md border border-gray-300 bg-white dark:bg-black px-4 py-2 text-sm 3xl:text-xl font-medium">
                 Previous
             </Link>
             <Link 
                 :href="data.next_page_url"
                 :preserve-scroll="true"
                 :disabled="!next_page_url"
-                class="relative inline-flex items-center rounded-md border border-gray-300 bg-white dark:bg-muted/40 px-4 py-2 text-sm 3xl:text-xl font-medium">
+                class="relative inline-flex items-center rounded-md border border-gray-300 bg-white dark:bg-black px-4 py-2 text-sm 3xl:text-xl font-medium">
                 Next
             </Link>
         </div>
@@ -42,8 +42,8 @@
                         <Link :href="link.url" v-html="link.label" 
                             :preserve-scroll="true"
                             :disabled="!link.active"
-                            class="relative inline-flex duration-200 items-center shadow rounded border bg-white dark:bg-muted/40 px-[14px] py-2 text-sm font-medium focus:z-20"
-                            :class="{ '!bg-green-600 !text-white !border-green-600 hover:!bg-green-700' : link.active }"
+                            class="relative inline-flex duration-200 items-center shadow rounded border bg-white dark:bg-black px-[14px] py-2 text-sm font-medium focus:z-20"
+                            :class="{ '!bg-fuchsia-600 !text-white !border-fuchsia-600 hover:!bg-fuchsia-700' : link.active }"
                             >
                         </Link>
                     </template>
