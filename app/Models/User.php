@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,7 +33,6 @@ class User extends Authenticatable
         'email',
         'password',
         'status',
-        'showroom_id',
     ];
 
     /**
@@ -71,18 +68,6 @@ class User extends Authenticatable
     public function getRouteKeyName()
     {
         return 'username';
-    }
-
-    public function codes (): HasMany {
-        return $this->hasMany(Code::class);
-    }
-
-    public function clicks (): HasMany {
-        return $this->hasMany(Click::class);
-    }
-
-    public function showroom (): BelongsTo {
-        return $this->belongsTo(Showroom::class);
     }
 
     public function image() : MorphOne

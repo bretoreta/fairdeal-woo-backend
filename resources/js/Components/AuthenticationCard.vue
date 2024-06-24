@@ -22,7 +22,7 @@ defineProps({
             <div class="relative z-20 mt-auto">
                 <blockquote class="space-y-2">
                     <footer class="text-sm">
-                        Developed with ❤️ by Fairdeal Furniture Development Team
+                        <p class="text-xs text-gray-400 dark:text-muted-foreground">Proudly Maintained with ❤️ by <a href="http://github.com/bretoreta" class="hover:underline" target="_blank" rel="noopener noreferrer"><b>NerdOnTheStreet</b></a></p>
                     </footer>
                 </blockquote>
             </div>

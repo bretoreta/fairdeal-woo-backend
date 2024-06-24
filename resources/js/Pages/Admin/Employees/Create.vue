@@ -15,7 +15,7 @@ defineProps({
 const form = useForm({
     name: '',
     email: '',
-    selectedShowroom: '',
+    username: '',
     phone: '',
 });
 
@@ -43,35 +43,17 @@ const submit = () => {
                         <InputError class="mt-2" :message="form.errors.name" />
                     </div>
 
-                    <div class="mt-4 flex items-center space-x-4">
-                        <div class="w-full">
-                            <Label>Email</Label>
-                            <Input
-                                id="email"
-                                v-model="form.email"
-                                type="email"
-                                class="mt-1 block w-full"
-                                required
-                                autocomplete="email"
-                            />
-                            <InputError class="mt-2" :message="form.errors.email" />
-                        </div>
-                        <div class="w-full">
-                            <Label>Showroom</Label>
-                            <Select v-model="form.selectedShowroom">
-                                <SelectTrigger class="mt-1">
-                                    <SelectValue placeholder="Select a showroom" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectItem v-for="item in showrooms" :key="item.id" :value="item">
-                                            {{ item.name }}
-                                        </SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                            <InputError class="mt-2" :message="form.errors.username" />
-                        </div>
+                    <div class="mt-4">
+                        <Label>Email</Label>
+                        <Input
+                            id="email"
+                            v-model="form.email"
+                            type="email"
+                            class="mt-1 block w-full"
+                            required
+                            autocomplete="email"
+                        />
+                        <InputError class="mt-2" :message="form.errors.email" />
                     </div>
 
                     <div class="mt-4">

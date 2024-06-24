@@ -35,16 +35,12 @@ class EmployeesController extends Controller
 
     public function create()
     {
-        return Inertia::render('Admin/Employees/Create', [
-            'showrooms' => Showroom::all(['id', 'name']),
-        ]);
+        return Inertia::render('Admin/Employees/Create');
     }
 
     public function show(User $user)
     {
-        return Inertia::render('Admin/Employees/Show', [
-            'employee' => $user->load('showroom'),
-        ]);
+        return Inertia::render('Admin/Employees/Show');
     }
 
     public function store(StoreRequest $request)

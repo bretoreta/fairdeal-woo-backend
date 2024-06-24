@@ -10,7 +10,6 @@ import RegistrationCard from '@/Components/Auth/RegistrationCard.vue';
 
 const form = useForm({
     name: '',
-    referrer: '',
     email: '',
     username: '',
     phone: '',

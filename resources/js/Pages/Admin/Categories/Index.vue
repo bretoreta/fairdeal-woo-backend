@@ -156,9 +156,7 @@ const submit = () => {
                                                 {{ category.name }}
                                             </TableCell>
                                             <TableCell>
-                                                <Badge variant="outline" class="capitalize">
-                                                    {{ category.slug }}
-                                                </Badge>
+                                                /{{ category.slug }}
                                             </TableCell>
                                             <TableCell class="hidden md:table-cell">
                                                 {{ category.tag_id }}
@@ -179,7 +177,7 @@ const submit = () => {
                                                     <DropdownMenuContent align="end">
                                                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                                         <DropdownMenuItem disabled>
-                                                            <Link :href="route('admin.products.edit', product.id)" class="w-full">Edit</Link>
+                                                            <Link :href="route('admin.products.edit', category.id)" class="w-full">Edit</Link>
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem disabled>Delete</DropdownMenuItem>
                                                     </DropdownMenuContent>

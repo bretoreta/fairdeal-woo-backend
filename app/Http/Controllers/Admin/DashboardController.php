@@ -20,7 +20,7 @@ class DashboardController extends Controller
                 'waitingSyncProducts' => Product::where('sync_status', 'notsynced')->count(),
                 'syncedProducts' => Product::where('sync_status', 'synced')->count(),
             ],
-            'notifications' => $request->user()->notifications,
+            'notifications' => $request->user()->notifications()->take(20)->get(),
             'syncTransactions' => SyncTransaction::whereBetween('updated_at', [now()->startOfWeek(), now()->endOfWeek()])->latest()->get(),
         ]);
     }

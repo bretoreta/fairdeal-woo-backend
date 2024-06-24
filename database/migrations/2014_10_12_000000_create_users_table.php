@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('phone');
             $table->enum('status', ['active', 'pending', 'review', 'closed'])->default('pending');
             $table->rememberToken();
-            $table->foreignId('showroom_id')->nullable()->constrained()->nullOnDelete();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->string('country')->nullable();
             $table->string('country_iso2_code')->nullable();
