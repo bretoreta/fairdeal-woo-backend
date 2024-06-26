@@ -22,7 +22,7 @@ defineProps({
             <p class="text-gray-500 text-sm">Use this resource to manage notifications you receive for your account.</p>
         </div>
         <div class="pt-4 space-y-4">
-            <Tabs default-value="unread" class="space-y-4" v-if="notifications.length > 0">
+            <Tabs default-value="unread" class="space-y-4">
                 <TabsList>
                     <TabsTrigger value="unread">
                         <div class="inline-flex items-center gap-x-2">
@@ -95,6 +95,7 @@ defineProps({
                             </div>
                         </div>
                     </div>
+                    <EmptyState v-if="notifications.filter(n => n.read_at).length == 0" title="No Notifications" subtitle="Yay! Nothing to report here. Feel free to explore elsewhere dear wanderer" type="info" />
                 </TabsContent>
             </Tabs>
         </div>

@@ -55,6 +55,7 @@ class SyncProducts implements ShouldQueue
                         'manage_stock' => $product->manage_stock,
                         'stock_quantity' => $product->stock_quantity,
                         'stock_status' => $product->stock_status,
+                        'status' => $product->product_status,
                         'attributes' => $product->attributes,
                     ]);
 
@@ -75,10 +76,11 @@ class SyncProducts implements ShouldQueue
                         'manage_stock' => $product->manage_stock,
                         'stock_quantity' => $product->stock_quantity,
                         'stock_status' => $product->stock_status,
+                        'status' => $product->product_status,
                         'attributes' => $product->attributes,
                     ]);
                     
-                    Log::info("Created product with woo ID: {$product->woocommerce_id}");
+                    Log::info("Created product with woo ID: ". $woo_product['id']);
                     $product->woocommerce_id = $woo_product['id'];
                     // TODO: Implement a feature to also sync images for the newly created product
                 }

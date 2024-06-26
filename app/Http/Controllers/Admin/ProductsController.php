@@ -48,4 +48,26 @@ class ProductsController extends Controller
             'product' => $product
         ]);
     }
+
+    public function update (Request $request, Product $product) {
+        $product->update([
+            'name' => $product->name,
+            'featured' => $product->featured,
+            'description' => $product->description,
+            'short_description' => $product->short_description,
+            'regular_price' => $product->regular_price,
+            'sale_price' => $product->sale_price,
+            'manage_stock' => $product->manage_stock,
+            'stock_quantity' => $product->stock_quantity,
+            'stock_status' => $product->stock_status,
+            'product_status' => $product->status,
+            'attributes' => $product->attributes,
+            'sync_status' => 'notsynced',
+        ]);
+
+        return redirect(route('admin.products.index'))->with('message', [
+            'type' => 'success',
+            'message' => "Product #{$product->id} has been updated successfully."
+        ]);
+    }
 }

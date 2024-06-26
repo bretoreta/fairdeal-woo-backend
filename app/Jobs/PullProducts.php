@@ -63,6 +63,7 @@ class PullProducts implements ShouldQueue
                         'manage_stock' => $product->manage_stock,
                         'stock_quantity' => $product->stock_quantity,
                         'stock_status' => $product->stock_status,
+                        'product_status' => $product->status,
                         'attributes' => $product->attributes,
                         'sync_status' => 'synced',
                     ]);

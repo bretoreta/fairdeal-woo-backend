@@ -25,7 +25,8 @@ return new class extends Migration
             $table->string('sale_price')->nullable();
             $table->boolean('manage_stock')->default(false);
             $table->integer('stock_quantity')->nullable();
-            $table->string('stock_status');
+            $table->string('stock_status')->default('instock');
+            $table->string('product_status')->default('publish');
             $table->jsonb('attributes');
             $table->enum('sync_status', ['synced', 'notsynced']);
             $table->timestamps();

@@ -12,7 +12,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Com
 import { Badge } from '@/Components/ui/badge'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import { route } from '../../../../../vendor/tightenco/ziggy/src/js';
 
 const props = defineProps({
     product: Object
@@ -21,6 +20,7 @@ const props = defineProps({
 const showSlideOver = ref(false);
 
 const form = useForm({
+    id: props.product.id,
     name: props.product.name,
     featured: props.product.featured,
     description: props.product.description,
@@ -31,16 +31,13 @@ const form = useForm({
     manage_stock: props.product.manage_stock,
     stock_quantity: props.product.stock_quantity,
     stock_status: props.product.stock_status,
+    product_status: props.product.product_status,
     attributes: props.product.attributes,
     sync_status: props.product.sync_status,
 });
 
 const submit = () => {
-    form.put(route('admin.products.update', form.id), {
-        onSuccess: () => {
-            showSlideOver.value = false;
-        }
-    });
+    form.put(route('admin.products.update', form.id));
 }
 
 </script>
@@ -48,7 +45,7 @@ const submit = () => {
 <template>
     <AdminLayout title="Edit Product">
         <div class="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-            <div class="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
+            <form class="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4" @submit.prevent="submit">
                 <div class="flex items-center gap-4">
                     <Button variant="outline" size="icon" class="h-7 w-7" @click="router.visit(route('admin.products.index'))">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
@@ -107,11 +104,20 @@ const submit = () => {
                         </div>
                         <Card>
                             <CardHeader>
-                                <CardTitle>Product Sync</CardTitle>
+                                <CardTitle>Product Prices</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <div class="grid gap-6 sm:grid-cols-3">
-                                    
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="col-span-2 md:col-span-1">
+                                        <Label for="regular_price">Regular Price</Label>
+                                        <Input id="regular_price" type="text" class="w-full"
+                                            v-model="form.regular_price"/>
+                                    </div>
+                                    <div class="col-span-2 md:col-span-1">
+                                        <Label for="sale_price">Sale Price</Label>
+                                        <Input id="sale_price" type="text" class="w-full"
+                                            v-model="form.sale_price"/>
+                                    </div>
                                 </div>
                             </CardContent>
                         </Card>
@@ -125,19 +131,16 @@ const submit = () => {
                                 <div class="grid gap-6">
                                     <div class="grid gap-3">
                                         <Label for="status">Status</Label>
-                                        <Select>
+                                        <Select v-model="form.product_status">
                                             <SelectTrigger id="status" aria-label="Select status">
                                                 <SelectValue placeholder="Select status" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value="draft">
-                                                    Draft
-                                                </SelectItem>
-                                                <SelectItem value="published">
+                                                <SelectItem value="publish">
                                                     Active
                                                 </SelectItem>
-                                                <SelectItem value="archived">
-                                                    Archived
+                                                <SelectItem value="draft">
+                                                    Draft
                                                 </SelectItem>
                                             </SelectContent>
                                         </Select>
@@ -149,7 +152,7 @@ const submit = () => {
                             <CardHeader>
                                 <CardTitle>Product Images</CardTitle>
                                 <CardDescription>
-                                    Upload an image you'd love to look at
+                                    Images are pulled in from the vault.
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
@@ -174,7 +177,7 @@ const submit = () => {
                                 </div>
                             </CardContent>
                         </Card>
-                        <Card>
+                        <!-- <Card>
                             <CardHeader>
                                 <CardTitle>Archive Product</CardTitle>
                                 <CardDescription>
@@ -187,7 +190,7 @@ const submit = () => {
                                     Archive Product
                                 </Button>
                             </CardContent>
-                        </Card>
+                        </Card> -->
                     </div>
                 </div>
                 <div class="flex items-center justify-center gap-2 md:hidden">
@@ -198,7 +201,7 @@ const submit = () => {
                         Save Product
                     </Button>
                 </div>
-            </div>
+            </form>
         </div>
     </AdminLayout>
 </template>
