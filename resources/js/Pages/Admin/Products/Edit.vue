@@ -47,12 +47,13 @@ const submit = () => {
         <div class="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
             <form class="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4" @submit.prevent="submit">
                 <div class="flex items-center gap-4">
-                    <Button variant="outline" size="icon" class="h-7 w-7" @click="router.visit(route('admin.products.index'))">
+                    <Link class="h-7 w-7 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground" 
+                        :href="route('admin.products.index')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                         </svg>
                         <span class="sr-only">Back</span>
-                    </Button>
+                    </Link>
                     <h1 class="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
                         {{ product.name }}
                     </h1>

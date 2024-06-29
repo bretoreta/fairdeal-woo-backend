@@ -40,7 +40,7 @@ class SyncProducts implements ShouldQueue
             foreach ($products as $product) {
 
                 // If we have a WooCommerce id, update the product.
-                if($product->woocommerce_id) {
+                if(!is_null($product->woocommerce_id)) {
                     Log::info("Updating product with woo ID: {$product->woocommerce_id}");
 
                     WooCommerceProduct::update($product->woocommerce_id, [
@@ -63,7 +63,10 @@ class SyncProducts implements ShouldQueue
                 
                 // Else, create a new product
                 else {
-                    $woo_product = WooCommerceProduct::create([
+                    // Load images
+                    $product->load('images');
+
+                    $wooProduct = [
                         'type' => 'simple',
                         'name' => $product->name,
                         'slug' => $product->slug,
@@ -78,11 +81,29 @@ class SyncProducts implements ShouldQueue
                         'stock_status' => $product->stock_status,
                         'status' => $product->product_status,
                         'attributes' => $product->attributes,
-                    ]);
+                    ];
+
+                    // Get all images
+                    $productImages = $product->images()->get();
+
+                    $images = [];
+
+                    if($productImages) {
+                        foreach($productImages as $image) {
+                            $imageElement = [
+                                'src' => $image->src
+                            ];
+                
+                            $images[] = $imageElement;
+                        }
+
+                        $wooProduct['images'] = $images;
+                    }
+
+                    $createdWooProduct = WooCommerceProduct::create($wooProduct);
                     
-                    Log::info("Created product with woo ID: ". $woo_product['id']);
-                    $product->woocommerce_id = $woo_product['id'];
-                    // TODO: Implement a feature to also sync images for the newly created product
+                    Log::info("Created product with woo ID: ". $createdWooProduct['id']);
+                    $product->woocommerce_id = $createdWooProduct['id'];
                 }
 
                 // Update the product status to synced

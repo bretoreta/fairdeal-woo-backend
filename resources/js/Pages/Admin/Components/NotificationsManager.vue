@@ -55,10 +55,10 @@ defineProps({
                                     <p class="text-sm font-semibold text-gray-800 dark:text-gray-300">{{ notification.data.exception_message }}</p>
                                 </div>
                                 <div class="mt-4 inline-flex gap-x-2" v-if="notification.data.actions">
-                                    <Button size="sm" v-if="notification.data.actions?.primary" @click="router.post(route(notification.data.actions?.primary.action_url))">
+                                    <Button size="sm" v-if="notification.data.actions?.primary" @click="router.post(notification.data.actions?.primary.action_url)">
                                         {{ notification.data.actions?.primary.action_label }}
                                     </Button>
-                                    <Button size="sm" variant="outline" v-if="notification.data.actions?.secondary" @click="router.post(route(notification.data.actions?.secondary.action_url))">
+                                    <Button size="sm" variant="outline" v-if="notification.data.actions?.secondary" @click="router.post(notification.data.actions?.secondary.action_url)">
                                         {{ notification.data.actions?.secondary.action_label }}
                                     </Button>
                                 </div>

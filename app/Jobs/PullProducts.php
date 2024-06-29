@@ -9,13 +9,16 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Codexshaper\WooCommerce\Facades\Product as WooCommerceProduct;
+use App\Models\Image as ImageModel;
 use App\Models\Product;
 use App\Models\SyncTransaction;
 use App\Models\User;
 use App\Notifications\Admin\SyncFailedNotification;
 use App\Notifications\Admin\SyncFinishedNotification;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class PullProducts implements ShouldQueue
@@ -40,46 +43,67 @@ class PullProducts implements ShouldQueue
 
         do {
             // Pull products 100 per loop
-            $products = WooCommerceProduct::all([
+            $wooProducts = WooCommerceProduct::all([
                 'per_page' => $per_page,
                 'page' => $page,
                 'fields' => 'id,name,slug,featured,description,short_description,sku,regular_price,sale_price,manage_stock,stock_quantity,stock_status,attributes,categories'
             ]);
             
-            if(count($products) > 0) {
+            if(count($wooProducts) > 0) {
                 Log::info("Syncing {$per_page} products of page {$page}");
-                foreach ($products as $product) {
+                foreach ($wooProducts as $wooProduct) {
                     // If we have products in the loop, create one
-                    $created_product = Product::create([
-                        'woocommerce_id' => $product->id,
-                        'name' => $product->name,
-                        'slug' => $product->slug,
-                        'featured' => $product->featured,
-                        'description' => $product->description,
-                        'short_description' => $product->short_description,
-                        'sku' => $product->sku,
-                        'regular_price' => $product->regular_price,
-                        'sale_price' => $product->sale_price,
-                        'manage_stock' => $product->manage_stock,
-                        'stock_quantity' => $product->stock_quantity,
-                        'stock_status' => $product->stock_status,
-                        'product_status' => $product->status,
-                        'attributes' => $product->attributes,
+                    $laravelProduct = Product::create([
+                        'woocommerce_id' => $wooProduct->id,
+                        'name' => $wooProduct->name,
+                        'slug' => $wooProduct->slug,
+                        'featured' => $wooProduct->featured,
+                        'description' => $wooProduct->description,
+                        'short_description' => $wooProduct->short_description,
+                        'sku' => $wooProduct->sku,
+                        'regular_price' => $wooProduct->regular_price,
+                        'sale_price' => $wooProduct->sale_price,
+                        'manage_stock' => $wooProduct->manage_stock,
+                        'stock_quantity' => $wooProduct->stock_quantity,
+                        'stock_status' => $wooProduct->stock_status,
+                        'product_status' => $wooProduct->status,
+                        'attributes' => $wooProduct->attributes,
                         'sync_status' => 'synced',
                     ]);
+
+                    if(!is_null($wooProduct->images)) {
+                        foreach($wooProduct->images as $image) {
+                            $response = Http::get($image->src);
+                            $downloadedImage = $response->getBody()->getContents();
+        
+                            $filename = basename($image->src);
+                            $path = "product-images/{$wooProduct->sku}/$filename";
+                            $src = url("/storage/{$path}");
+        
+                            Storage::disk('public')->put($path, $downloadedImage);
+        
+                            ImageModel::create([
+                                'user_id' => $this->actor->id,
+                                'model_id' => $laravelProduct->id,
+                                'model_type' => Product::class,
+                                'path' => $path,
+                                'src' => $src,
+                            ]);
+                        }
+                    }
         
                     // Fetch the categories using their tag ids
-                    $categoryTagIds = collect($product->categories)->pluck('id');
-                    $categories_ids = Category::whereIn('tag_id', $categoryTagIds)->get()->pluck('id');
+                    $wooCategoryTagIds = collect($wooProduct->categories)->pluck('id');
+                    $laravelCategoriesIds = Category::whereIn('tag_id', $wooCategoryTagIds)->get()->pluck('id');
         
                     // Attach the categories to the newly created product
-                    $created_product->categories()->attach($categories_ids);
+                    $laravelProduct->categories()->attach($laravelCategoriesIds);
                 }
             }
 
             $page++;
         }
-        while (count($products) > 0);
+        while (count($wooProducts) > 0);
 
         // Remove the sync lock
         $syncTransaction = SyncTransaction::where('status', 'running')->latest()->first();

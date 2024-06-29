@@ -16,15 +16,9 @@ return new class extends Migration
             $table->uuid()->unique()->index();
             $table->nullableMorphs('model');
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->string('file_name');
-            $table->string('mime_type');
-            $table->bigInteger('file_size');
-            $table->string('full_size_url');
-            $table->string('thumbnail_size_url');
-            $table->string('medium_size_url');
+            $table->string('path');
+            $table->string('src');
             $table->timestamps();
-
-            $table->index('uuid');
         });
     }
 

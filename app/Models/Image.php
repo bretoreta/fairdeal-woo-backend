@@ -15,12 +15,8 @@ class Image extends Model
         'model_type',
         'model_id',
         'user_id',
-        'file_name',
-        'mime_type',
-        'file_size',
-        'full_size_url',
-        'thumbnail_size_url',
-        'medium_size_url',
+        'path',
+        'src',
     ];
 
     protected static function boot() {
