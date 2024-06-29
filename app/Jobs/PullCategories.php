@@ -33,20 +33,32 @@ class PullCategories implements ShouldQueue
      */
     public function handle(): void
     {
-        $categories = WooCommerceCategory::all();
+        $per_page = 100;
+        $page = 1;
 
-        if(count($categories) > 0) {
-            foreach ($categories as $category) {
-                Category::create([
-                    'tag_id' => $category->id,
-                    'name' => $category->name,
-                    'slug' => $category->slug,
-                    'parent_id' => $category->parent,
-                    'description' => $category->description,
-                    'display' => $category->display,
-                ]);
+        do {
+            $wooCategories = WooCommerceCategory::all([
+                'per_page' => $per_page,
+                'page' => $page,
+            ]);
+
+            if(count($wooCategories) > 0) {
+                foreach ($wooCategories as $category) {
+                    Category::create([
+                        'tag_id' => $category->id,
+                        'name' => $category->name,
+                        'slug' => $category->slug,
+                        'parent_id' => $category->parent,
+                        'description' => $category->description,
+                        'display' => $category->display,
+                    ]);
+                }
             }
+
+            $page++;
         }
+        while (count($wooCategories) > 0);
+
 
         $syncTransaction = SyncTransaction::where('status', 'running')->latest()->first();
         if($syncTransaction) {
